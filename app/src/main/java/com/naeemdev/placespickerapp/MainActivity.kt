@@ -6,6 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.util.Log
 import android.widget.TextView
+import androidx.activity.result.ActivityResult
+import androidx.activity.result.contract.ActivityResultContracts
 import com.naeemdev.placeslib.AddressDataClass
 import com.naeemdev.placeslib.Constants
 import com.naeemdev.placeslib.MapType
@@ -20,36 +22,35 @@ class MainActivity : AppCompatActivity() {
     }
     fun init () {
         val intent = PlacePickerClass.IntentBuilder()
-
             .setLatLong(25.276987, -55.296249)
             .showLatLong(true)
             .setMapZoom(15.0f)
             .setAddressRequired(true)
             .setMapRawResourceStyle(R.raw.map_style)
             .setMapType(MapType.NORMAL)
-            .setPlaceSearchBar(true, "Your Google place APi Key Here")
+            .setPlaceSearchBar(true, "Your key here")
             .build(this)
-        startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
+          registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onActivityResult(Constants.PLACE_PICKER_REQUEST, result)
+        }.launch(intent)
 
     }
 
-    override fun onActivityResult(
-        requestCode: Int,
-        resultCode: Int,
-        data: Intent?
-    ) {
-        if (requestCode == Constants.PLACE_PICKER_REQUEST) {
-            if (resultCode == Activity.RESULT_OK) {
-                try {
-                    val addressData = data?.getParcelableExtra<AddressDataClass>(Constants.ADDRESS_INTENT)
+  private fun onActivityResult(requestCode: Int, result: ActivityResult) {
 
-                    findViewById<TextView>(R.id.tv_address).text = addressData.toString()
-                } catch (e: Exception) {
-                    e.message?.let { Log.e("MainActivity", it) }
-                }
-            }
-        } else {
-            super.onActivityResult(requestCode, resultCode, data)
-        }
-    }
+      if (requestCode == Constants.PLACE_PICKER_REQUEST) {
+          if (result.resultCode == Activity.RESULT_OK) {
+              val intent = result.data
+              try {
+                  val addressData = intent?.getParcelableExtra<AddressDataClass>(Constants.ADDRESS_INTENT)
+
+                  findViewById<TextView>(R.id.tv_address).text = addressData.toString()
+              } catch (e: Exception) {
+                  e.message?.let { Log.e("MainActivity", it) }
+              }
+          }
+      }
+
+}
+
 }
