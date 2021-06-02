@@ -21,7 +21,7 @@ For google map styling visit https://mapstyle.withgoogle.com/
 
 Code For Kotlin
 
-                val intent = PlacePicker.IntentBuilder()
+                val intent = PlacePickerClass.IntentBuilder()
                 .setLatLong(25.276987, -55.296249)  // Initial Latitude and Longitude the Map will load into
                 .showLatLong(true)  // Show Coordinates in the Activity
                 .setMapZoom(12.0f)  // Map Zoom Level. Default: 16.0
@@ -57,24 +57,26 @@ Code For Kotlin
  Code For Java       
  
 
-          Intent intent_drop = new PlacePicker.IntentBuilder()
-                      .setLatLong(25.276987, -55.296249)  // Initial Latitude and Longitude the Map will load into
-                        .showLatLong(true)  // Show Coordinates in the Activity
-                        .setMapZoom(15.0f)  // Map Zoom Level. Default: 16.0
-                        .setAddressRequired(true) // Set If return only Coordinates if cannot fetch Address for the coordinates. Default: True
-                        .hideMarkerShadow(true) // Hides the shadow under the map markerDepart. Default: False
-                        .setMarkerDrawable(R.drawable.ic_map_marker) // Change the default Marker Image
-                        .setMarkerImageImageColor(R.color.black_color)
-                        .setFabColor(R.color.blue_color)
-                        .setPrimaryTextColor(R.color.black_color) // Change text color of Shortened Address
-                        .setSecondaryTextColor(R.color.black_color) // Change text color of full Address
-                        .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style
-                        .setMapType(MapType.NORMAL)
-                        .setPlaceSearchBar(true,"your GOOGLE_API_KEY here")
-                        .onlyCoordinates(true)  //Get only Coordinates from Place Picker
-                        .hideLocationButton(false)   //Hide Location Button (Default: false)
-                        .disableMarkerAnimation(false)
-                        .build(this);
+          Intent intent_drop = new PlacePickerClass.IntentBuilder()
+                .setLatLong(Double.parseDouble(appSession.getLatitude()),
+                        Double.parseDouble(appSession.getLongitude()))  // Initial Latitude and Longitude the Map will load into
+                .showLatLong(true)  // Show Coordinates in the Activity
+                .setMapZoom(15.0f)  // Map Zoom Level. Default: 14.0
+                .setAddressRequired(true) // Set If return only Coordinates if cannot fetch Address for the coordinates. Default: True
+                .hideMarkerShadow(true) // Hides the shadow under the map markerDepart. Default: False
+                .setMarkerDrawable(R.drawable.ic_map_marker) // Change the default Marker Image
+                .setMarkerImageImageColor(R.color.blue)
+                .setFabColor(R.color.blue)
+                .setPrimaryTextColor(R.color.black_color) // Change text color of Shortened Address
+                .setSecondaryTextColor(R.color.black_color) // Change text color of full Address
+                .setMapRawResourceStyle(R.raw.map_style)  //Set Map Style
+                .setMapType(MapType.NORMAL)
+                .setPlaceSearchBar(true,"Your API Key here")
+                .onlyCoordinates(true)  //Get only Coordinates from Place Picker
+                .hideLocationButton(false)   //Hide Location Button (Default: false)
+                .disableMarkerAnimation(false)
+
+                .build(getActivity());
                 startActivityForResult(intent_drop, Constants.PLACE_PICKER_REQUEST);
 
             
