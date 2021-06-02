@@ -1,0 +1,4 @@
+<resources>
+    <string name="todo">TODO</string>
+    <string name="no_address">Not a valid Address</string>
+</resources>

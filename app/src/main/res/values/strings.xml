@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">PlacesPicker App</string>
+
+    <string name="google_maps_key" translatable="false">your Map key here</string>
 </resources>
