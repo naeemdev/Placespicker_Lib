@@ -40,20 +40,29 @@ Code For Kotlin
                 .hideLocationButton(true)   //Hide Location Button (Default: false)
                 .disableMarkerAnimation(true)   //Disable Marker Animation (Default: false)
                 .build(this)
-            startActivityForResult(intent, Constants.PLACE_PICKER_REQUEST)
+          registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            onActivityResult(Constants.PLACE_PICKER_REQUEST, result)
+        }.launch(intent)
             
  final Step  get the data `onActivityResult`
 
-          override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
+                private fun onActivityResult(requestCode: Int, result: ActivityResult) {
+
                   if (requestCode == Constants.PLACE_PICKER_REQUEST) {
-                      if (resultCode == Activity.RESULT_OK) {
-                      val addressData = data?.getParcelableExtra<AddressDataClass>(Constants.ADDRESS_INTENT)
+                      if (result.resultCode == Activity.RESULT_OK) {
+                          val intent = result.data
+                          try {
+                              val addressData = intent?.getParcelableExtra<AddressDataClass>(Constants.ADDRESS_INTENT)
+
+                              findViewById<TextView>(R.id.tv_address).text = addressData.toString()
+                          } catch (e: Exception) {
+                              e.message?.let { Log.e("MainActivity", it) }
+                          }
                       }
-                  } else {
-                      super.onActivityResult(requestCode, resultCode, data)
                   }
-              }
- 
+
+            }
+
  Code For Java       
  
 
