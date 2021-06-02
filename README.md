@@ -47,7 +47,7 @@ Code For Kotlin
           override fun onActivityResult(requestCode: Int,resultCode: Int,data: Intent?) {
                   if (requestCode == Constants.PLACE_PICKER_REQUEST) {
                       if (resultCode == Activity.RESULT_OK) {
-                      val addressData = data?.getParcelableExtra<AddressData>(Constants.ADDRESS_INTENT)
+                      val addressData = data?.getParcelableExtra<AddressDataClass>(Constants.ADDRESS_INTENT)
                       }
                   } else {
                       super.onActivityResult(requestCode, resultCode, data)
@@ -85,7 +85,7 @@ Code For Kotlin
                   protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
                       if (requestCode == Constants.PLACE_PICKER_REQUEST) {
                           if (resultCode == Activity.RESULT_OK && data != null) {
-                            AddressData addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
+                            AddressDataClass addressData = data.getParcelableExtra(Constants.ADDRESS_INTENT);
                           }
                       } else {
                           super.onActivityResult(requestCode, resultCode, data);
