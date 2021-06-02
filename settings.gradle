@@ -1,2 +1,3 @@
 rootProject.name = "PlacesPicker App"
 include ':app'
+include ':placeslib'
